@@ -1,4 +1,4 @@
-# Web Programming Project (A2)
+# TrainKu - Web Programming Project (A2)
 
 ## 🌟 Anggota Kelompok 3
 | No | Name | Student ID |
