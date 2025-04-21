@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Alert,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, Modal,Alert,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { stasiunList } from '../data/Stasiun';
 import { ScrollView } from 'react-native';

@@ -46,12 +46,6 @@ const MainNavigator = () => {
         <Menu.Item onPress={() => { closeMenu(); navigation.navigate('Booking'); }} title="Booking" />
         <Menu.Item onPress={() => { closeMenu(); navigation.navigate('Schedule'); }} title="Schedule" />
         <Menu.Item onPress={() => { closeMenu(); navigation.navigate('Payment'); }} title="Payment" />
-        {!isAdmin && (
-          <Menu.Item onPress={() => { closeMenu(); navigation.navigate('Profile'); }} title="Profile" />
-        )}
-        {isAdmin && (
-          <Menu.Item onPress={() => { closeMenu(); navigation.navigate('Admin'); }} title="Admin" />
-        )}
       </Menu>
     </View>
   );

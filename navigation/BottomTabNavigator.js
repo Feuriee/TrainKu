@@ -1,4 +1,5 @@
 // navigation/BottomTabNavigator.js
+//ini sebenarnya bukan bottom nav, tapi stack untuk deklarasi variabel setiap screen
 import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthContext } from '../context/AuthContext';
