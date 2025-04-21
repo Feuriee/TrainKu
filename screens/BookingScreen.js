@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,17 +6,18 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  Alert,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native'; // 👈
+import { useNavigation } from '@react-navigation/native';
 import { stasiunList } from '../data/Stasiun';
-import { ScrollView } from 'react-native-web';
+import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BookingScreen = () => {
-  const route = useRoute(); // 👈
-  const { asal: asalParam, tujuan: tujuanParam, kereta, waktu } = route.params || {};
+  const navigation = useNavigation();
 
-  const [asal, setAsal] = useState(asalParam || '');
-  const [tujuan, setTujuan] = useState(tujuanParam || '');
+  const [asal, setAsal] = useState('');
+  const [tujuan, setTujuan] = useState('');
   const [tanggal, setTanggal] = useState(new Date().toISOString().slice(0, 10));
   const [dewasa, setDewasa] = useState(1);
   const [bayi, setBayi] = useState(0);
@@ -27,14 +28,34 @@ const BookingScreen = () => {
   const increment = (setter, value) => setter(value + 1);
   const decrement = (setter, value) => setter(Math.max(0, value - 1));
 
-  const handleSubmit = () => {
+  const generateKodeBooking = () => {
+    const random = Math.floor(10000000 + Math.random() * 90000000);
+    return `TRN${random}`;
+  };
+
+  const handleSubmit = async () => {
     if (!asal || !tujuan) {
-      alert('Silakan isi semua kolom.');
+      Alert.alert('Peringatan', 'Silakan isi semua kolom.');
       return;
     }
-    alert(
-      `Tiket dari ${asal} ke ${tujuan} untuk ${dewasa} dewasa dan ${bayi} bayi pada ${tanggal} dengan kereta ${kereta || '-'} telah dipesan!`
-    );
+  
+    const kodeBooking = generateKodeBooking();
+  
+    const bookingData = {
+      kodeBooking,
+      asal,
+      tujuan,
+      tanggal,
+      dewasa,
+      bayi,
+    };
+  
+    try {
+      await AsyncStorage.setItem('bookingData', JSON.stringify(bookingData));
+      navigation.navigate('Payment');
+    } catch (error) {
+      Alert.alert('Error', 'Gagal menyimpan data booking.');
+    }
   };
 
   return (
@@ -42,6 +63,7 @@ const BookingScreen = () => {
       <Text style={styles.header}>Pemesanan Tiket Kereta Api</Text>
       <Text style={styles.date}>{new Date().toDateString()}</Text>
 
+      {/* Form */}
       <View style={styles.formGroup}>
         <Text>Stasiun Asal</Text>
         <TouchableOpacity
@@ -123,14 +145,12 @@ const BookingScreen = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Pilih Stasiun</Text>
-
             <TextInput
               placeholder="Cari stasiun..."
               value={searchText}
               onChangeText={setSearchText}
               style={styles.input}
             />
-
             <ScrollView style={{ maxHeight: 350 }}>
               {stasiunList
                 .filter(item =>
@@ -145,7 +165,8 @@ const BookingScreen = () => {
                       else setTujuan(item);
                       setModalVisible(false);
                       setSearchText('');
-                    }}>
+                    }}
+                  >
                     <Text>{item}</Text>
                   </TouchableOpacity>
                 ))}
@@ -253,6 +274,7 @@ const styles = StyleSheet.create({
     width: '90%',
     maxHeight: '80%',
     elevation: 10,
+    justifyContent: 'space-between',
   },
   modalTitle: {
     fontSize: 18,
@@ -268,6 +290,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 15,
   },
+  
   closeButton: {
     backgroundColor: '#007bff',
     color: '#fff',
@@ -276,9 +299,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontWeight: 'bold',
     overflow: 'hidden',
-    alignContent: 'flex-end',
     width: 80,
   },
+  
 });
 
 export default BookingScreen;

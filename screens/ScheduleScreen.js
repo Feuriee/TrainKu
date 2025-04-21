@@ -6,17 +6,20 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // 👈
+import { useNavigation } from '@react-navigation/native';
+import { stasiunList } from '../data/Stasiun';
 
-const dummySchedule = [
-  { id: '1', train: 'Argo Bromo', depart: '08:00', arrive: '12:00' },
-  { id: '2', train: 'Gajayana', depart: '10:30', arrive: '15:00' },
-  { id: '3', train: 'Taksaka', depart: '13:15', arrive: '18:00' },
-  { id: '4', train: 'Matarmaja', depart: '18:45', arrive: '23:30' },
-];
+const dummySchedule = stasiunList.slice(0, 4).map((stasiun, index) => ({
+  id: String(index + 1),
+  train: ['Argo Bromo', 'Gajayana', 'Taksaka', 'Matarmaja'][index],
+  depart: ['08:00', '10:30', '13:15', '18:45'][index],
+  arrive: ['12:00', '15:00', '18:00', '23:30'][index],
+  asal: stasiun,
+  tujuan: stasiunList[(index + 2) % stasiunList.length],
+}));
 
 const ScheduleScreen = () => {
-  const navigation = useNavigation(); // 👈
+  const navigation = useNavigation();
   const [filter, setFilter] = useState('all');
 
   const filterSchedule = (schedule) => {
@@ -51,20 +54,24 @@ const ScheduleScreen = () => {
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.train}>{item.train}</Text>
+            <Text style={styles.detail}>Asal: {item.asal}</Text>
+            <Text style={styles.detail}>Tujuan: {item.tujuan}</Text>
             <Text style={styles.detail}>Keberangkatan: {item.depart}</Text>
             <Text style={styles.detail}>Kedatangan: {item.arrive}</Text>
+
             <TouchableOpacity
-              style={styles.bookButton}
+              style={styles.infoButton}
               onPress={() =>
-                navigation.navigate('Booking', {
-                  asal: 'Jakarta', // Atur asal default atau bisa kosong
-                  tujuan: 'Surabaya', // Sama
-                  kereta: item.train,
-                  waktu: item.depart,
+                navigation.navigate('TrainDetail', {
+                  train: item.train,
+                  asal: item.asal,
+                  tujuan: item.tujuan,
+                  depart: item.depart,
+                  arrive: item.arrive,
                 })
               }
             >
-              <Text style={styles.bookButtonText}>Pesan</Text>
+              <Text style={styles.infoButtonText}>Info Selengkapnya</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -127,14 +134,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 3,
   },
-  bookButton: {
+  infoButton: {
     marginTop: 10,
     backgroundColor: '#0288d1',
     paddingVertical: 8,
     borderRadius: 8,
     alignItems: 'center',
   },
-  bookButtonText: {
+  infoButtonText: {
     color: '#fff',
     fontWeight: 'bold',
   },
