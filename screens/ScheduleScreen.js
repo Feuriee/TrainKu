@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { stasiunList } from '../data/Stasiun';
+import { Ionicons } from '@expo/vector-icons';
 
 const dummySchedule = stasiunList.slice(0, 4).map((stasiun, index) => ({
   id: String(index + 1),
@@ -23,15 +24,62 @@ const ScheduleScreen = () => {
   const [filter, setFilter] = useState('all');
 
   const filterSchedule = (schedule) => {
+    if (!schedule || !Array.isArray(schedule)) return [];
+    
     if (filter === 'all') return schedule;
-    if (filter === 'pagi') return schedule.filter(s => parseInt(s.depart) < 12);
-    if (filter === 'siang') return schedule.filter(s => parseInt(s.depart) >= 12 && parseInt(s.depart) < 17);
-    if (filter === 'malam') return schedule.filter(s => parseInt(s.depart) >= 17);
+    if (filter === 'pagi') return schedule.filter(s => parseInt(s.depart.split(":")[0]) < 12);
+    if (filter === 'siang') return schedule.filter(s => parseInt(s.depart.split(":")[0]) >= 12 && parseInt(s.depart.split(":")[0]) < 17);
+    if (filter === 'malam') return schedule.filter(s => parseInt(s.depart.split(":")[0]) >= 17);
     return schedule;
   };
 
+  const renderCard = ({ item }) => (
+    <View style={styles.resultItem}>
+      <View style={styles.resultLeft}>
+        <View style={styles.trainInfo}>
+          <Text style={styles.trainName}>{item.train}</Text>
+          <Text style={styles.trainSubtitle}>Asal: {item.asal}</Text>
+          <Text style={styles.trainSubtitle}>Tujuan: {item.tujuan}</Text>
+          <Text style={styles.trainSubtitle}>Keberangkatan: {item.depart}</Text>
+          <Text style={styles.trainSubtitle}>Kedatangan: {item.arrive}</Text>
+        </View>
+      </View>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() =>
+          navigation.navigate('TrainDetail', {
+            train: item.train,
+            asal: item.asal,
+            tujuan: item.tujuan,
+            depart: item.depart,
+            arrive: item.arrive,
+          })
+        }
+      >
+        <Text style={styles.btnInfo}>Info Selengkapnya</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
+      <View style={styles.navbar}>
+        <Text style={styles.logo}>TrainKu</Text>
+          <View style={styles.navItems}>
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                  <Text style={styles.navItem}>Home</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Booking')}>
+                  <Text style={styles.navItem}>Beli Tiket</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Schedule')}>
+                  <Text style={[styles.navItem, styles.activeNav]}>Jadwal Kereta</Text>
+              </TouchableOpacity>
+                  <Ionicons name="search" size={22} style={styles.icon} onPress={() => navigation.navigate('Search')} />
+                  <Ionicons name="person-circle-outline" size={26} style={styles.icon} onPress={() => navigation.navigate('Profile')} />
+          </View>
+      </View>
+    <View style={styles.elemen}>
       <Text style={styles.title}>Jadwal Kereta</Text>
 
       <View style={styles.filterRow}>
@@ -51,45 +99,29 @@ const ScheduleScreen = () => {
       <FlatList
         data={filterSchedule(dummySchedule)}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.train}>{item.train}</Text>
-            <Text style={styles.detail}>Asal: {item.asal}</Text>
-            <Text style={styles.detail}>Tujuan: {item.tujuan}</Text>
-            <Text style={styles.detail}>Keberangkatan: {item.depart}</Text>
-            <Text style={styles.detail}>Kedatangan: {item.arrive}</Text>
-
-            <TouchableOpacity
-              style={styles.infoButton}
-              onPress={() =>
-                navigation.navigate('TrainDetail', {
-                  train: item.train,
-                  asal: item.asal,
-                  tujuan: item.tujuan,
-                  depart: item.depart,
-                  arrive: item.arrive,
-                })
-              }
-            >
-              <Text style={styles.infoButtonText}>Info Selengkapnya</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        renderItem={renderCard}
+        ListEmptyComponent={<Text style={styles.noResult}>Tidak ditemukan.</Text>}
       />
+    </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  elemen: { 
+    padding: 20,
+    flex: 1,
+    backgroundColor: '#fff'
+  },
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f4f9ff',
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 15,
+    color: '#0066ff',
   },
   filterRow: {
     flexDirection: 'row',
@@ -113,37 +145,80 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  card: {
-    backgroundColor: '#fff',
-    padding: 16,
+  resultItem: {
+    backgroundColor: '#f9f9f9',
+    borderWidth: 1,
+    borderColor: '#000',
     borderRadius: 10,
-    marginBottom: 15,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
+    padding: 15,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  train: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0d47a1',
-    marginBottom: 5,
-  },
-  detail: {
-    fontSize: 14,
-    marginBottom: 3,
-  },
-  infoButton: {
-    marginTop: 10,
-    backgroundColor: '#0288d1',
-    paddingVertical: 8,
-    borderRadius: 8,
+  resultLeft: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  infoButtonText: {
+  trainInfo: {
+    marginLeft: 0,
+  },
+  trainName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#0D47A1',
+  },
+  trainSubtitle: {
+    fontSize: 14,
+    color: '#999',
+  },
+  btnContainer: {
+    backgroundColor: '#0066ff',
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  btnInfo: {
     color: '#fff',
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  noResult: {
+    fontStyle: 'italic',
+    color: '#757575',
+    marginBottom: 10,
+  },
+  navItem: {
+    marginHorizontal: 10,
+    fontSize: 14,
+    color: '#000',
+  },
+  navItems: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  activeNav: {
+    color: '#2962FF',
+    fontWeight: 'bold',
+  },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    elevation: 4,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  logo: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  icon: {
+    marginHorizontal: 8,
+    color: '#000',
   },
 });
 

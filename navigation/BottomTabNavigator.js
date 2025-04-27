@@ -9,6 +9,7 @@ import ScheduleScreen from '../screens/ScheduleScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AdminScreen from '../screens/AdminScreen';
+import HubungiKami from '../screens/HubungiKami';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const AppScreens = () => {
       <Stack.Screen name="Booking" component={BookingScreen} />
       <Stack.Screen name="Schedule" component={ScheduleScreen} />
       <Stack.Screen name="Payment" component={PaymentScreen} />
+      <Stack.Screen name="HubungiKami" component={HubungiKami} />
       <Stack.Screen
         name={isAdmin ? 'Admin' : 'Profile'}
         component={isAdmin ? AdminScreen : ProfileScreen}

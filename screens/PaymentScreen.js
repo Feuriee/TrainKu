@@ -5,12 +5,12 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  Alert,
   ActivityIndicator
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
+import Footer from '../navigation/Footer';
 
 const PaymentScreen = ({ navigation }) => {
   const [bookingData, setBookingData] = useState(null);
@@ -35,17 +35,18 @@ const PaymentScreen = ({ navigation }) => {
       }
     } catch (error) {
       console.error("Error loading booking data:", error);
-      Alert.alert('Error', 'Gagal mengambil data booking: ' + error.message);
+      window.alert('Error', 'Gagal mengambil data booking: ' + error.message);
     }
   };
 
   const handlePayment = async () => {
     try {
       // Validasi input
-      if (!cardNumber || !name) {
-        Alert.alert('Gagal', 'Harap isi data pembayaran dengan lengkap!');
+      if (!cardNumber.trim() || !name.trim()) {
+        window.alert('Harap isi data pembayaran dengan lengkap!');
         return;
       }
+      
 
       setIsLoading(true);
       
@@ -62,7 +63,7 @@ const PaymentScreen = ({ navigation }) => {
         setName('');
         
         // Tampilkan konfirmasi pembayaran berhasil
-        Alert.alert(
+        window.alert(
           'Sukses',
           'Pembayaran berhasil diproses! Data booking telah dihapus.',
           [
@@ -79,11 +80,11 @@ const PaymentScreen = ({ navigation }) => {
         );
       } catch (error) {
         console.error("Error removing data:", error);
-        Alert.alert('Error', 'Gagal menghapus data booking: ' + error.message);
+        window.alert('Error', 'Gagal menghapus data booking: ' + error.message);
       }
     } catch (error) {
       console.error("Payment error:", error);
-      Alert.alert('Error', 'Terjadi kesalahan saat memproses pembayaran: ' + error.message);
+      window.alert('Error', 'Terjadi kesalahan saat memproses pembayaran: ' + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -103,14 +104,14 @@ const PaymentScreen = ({ navigation }) => {
         console.log("Verified: Data successfully deleted");
         // Update state untuk refresh UI
         setBookingData(null);
-        Alert.alert('Sukses', 'Data booking berhasil dihapus!');
+        window.alert('Sukses', 'Data booking berhasil dihapus!');
       } else {
         console.log("Warning: Data still exists after deletion");
-        Alert.alert('Peringatan', 'Data masih ada setelah mencoba dihapus. Coba hapus semua data.');
+        window.alert('Peringatan', 'Data masih ada setelah mencoba dihapus. Coba hapus semua data.');
       }
     } catch (error) {
       console.error("Error in force delete:", error);
-      Alert.alert('Error', 'Gagal menghapus data: ' + error.message);
+      window.alert('Error', 'Gagal menghapus data: ' + error.message);
     } finally {
       setIsLoading(false);
     }

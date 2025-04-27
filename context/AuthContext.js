@@ -1,13 +1,32 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ role: 'user' }); // bisa diubah ke 'admin'
-
+  const [user, setUser] = useState(null); // null berarti belum login
+  
+  const login = (email, password) => {
+    // Logic autentikasi sederhana
+    if (email === 'admin' && password === 'TrainKu') {
+      setUser({ email, role: 'admin', name: 'Admin TrainKu' });
+      return { success: true, role: 'admin' };
+    } else if (email === 'user' && password === 'user123') {
+      setUser({ email, role: 'user', name: 'Bombardilo Crocodilo' });
+      return { success: true, role: 'user' };
+    }
+    return { success: false };
+  };
+  
+  const logout = () => {
+    setUser(null);
+  };
+  
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+// Tambahkan hook useAuth untuk memudahkan penggunaan context
+export const useAuth = () => useContext(AuthContext);

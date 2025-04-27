@@ -28,10 +28,10 @@
 ## 🏗️ Installation & Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https://github.com/Feuriee/TrainKu.git
 
 # Navigate to the project directory
-cd your-repo-name
+cd TrainKu
 
 # Install dependencies
 npm install
@@ -42,17 +42,33 @@ npm start
 
 ## 📂 Project Structure
 ```
-project-root/
-├── frontend/
-│   ├── public/
-│   └── src/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── config/
-├── docs/
-└── README.md
+TRAINKU ├── .expo
+        ├── assets 
+        ├── context 
+          └── AuthContext.js
+        ├── data 
+          └── Stasiun.js
+        ├── navigation 
+          └── BottomTabNavigator.js 
+          └── Footer.js 
+          └── MainNavigator.js
+        ├── node_modules
+        ├── screens 
+          └── AdminScreen.js 
+          └── BookingScreen.js 
+          └── HomeScreen.js 
+          └── HubungiKami.js 
+          └── LoginScreen.js 
+          └── PaymentScreen.js 
+          └── ProfileScreen.js 
+          └── ScheduleScreen.js 
+          └── SearchScreen.js
+        ├── .gitignore
+        ├── App.js
+        ├── package.json
+        ├── package-lock.json
+        ├── index.js
+        └── README.md
 ```
 
 ## 📊 Project Progress
