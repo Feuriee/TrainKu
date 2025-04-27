@@ -1,27 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome icon
 
 const teamMembers = [
   {
     id: 1,
-    name: 'Nama Anggota 1',
-    image: require('../assets/UserProfile.jpg'), // Pastikan kamu punya file gambar ini di folder assets
-    instagram: 'https://instagram.com/username1',
-    github: 'https://github.com/username1',
+    name: 'Ghazi Al Ghifari',
+    instagram: 'https://www.instagram.com/gzhii._/',
+    github: 'https://github.com/KiaiAji',
   },
   {
     id: 2,
-    name: 'Nama Anggota 2',
-    image: require('../assets/UserProfile.jpg'),
-    instagram: 'https://instagram.com/username2',
-    github: 'https://github.com/username2',
+    name: 'I Nyoman Dimas Kresna Adryan',
+    instagram: 'https://www.instagram.com/dimaskresna.a?igsh=MWs3bHFjM2tkcWZkNQ%3D%3D&utm_source=qr',
+    github: 'https://github.com/Dimasadryan19?tab=overview&from=2025-03-01&to=2025-03-31',
   },
   {
     id: 3,
-    name: 'Nama Anggota 3',
-    image: require('../assets/UserProfile.jpg'),
-    instagram: 'https://instagram.com/username3',
-    github: 'https://github.com/username3',
+    name: 'Merischa Theresia Hutauruk',
+    instagram: 'https://www.instagram.com/merhtk.15?igsh=dDF1NHduMTVvbWhq',
+    github: 'https://github.com/merischahutauruk',
+  },
+  {
+    id: 4,
+    name: 'Yohanes Adi Prasetya',
+    instagram: 'https://instagram.com/yhanes_adp',
+    github: 'https://github.com/Feuriee',
   },
 ];
 
@@ -34,30 +38,31 @@ const AboutScreen = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Tentang Aplikasi TrainKu</Text>
       <Text style={styles.description}>
-        TrainKu adalah aplikasi booking tiket kereta api yang memudahkan pengguna untuk memesan tiket dengan cepat, 
-        melihat jadwal keberangkatan, serta mengatur ketersediaan tiket melalui panel admin. 
-        Aplikasi ini dibuat untuk mempermudah akses transportasi berbasis mobile.
+        TrainKu adalah aplikasi mobile booking tiket kereta api yang dibuat untuk memenuhi tugas akhir mata kuliah Proyek Pemrograman Web. 
+        Aplikasi ini dibuat pada tahun 2025 dengan tujuan memudahkan pengguna dalam memesan tiket, mengecek jadwal kereta, 
+        serta mengelola ketersediaan tiket melalui panel admin.
       </Text>
 
       <Text style={styles.subtitle}>Anggota Kelompok</Text>
+
       {teamMembers.map(member => (
-        <View key={member.id} style={styles.card}>
-          <Image source={member.image} style={styles.image} />
-          <Text style={styles.name}>{member.name}</Text>
-          <View style={styles.buttonGroup}>
+        <View key={member.id} style={styles.memberContainer}>
+          <Text style={styles.memberName}>{member.name}</Text>
+          <View style={styles.linkGroup}>
             <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#E1306C' }]}
+              style={styles.iconButton}
               onPress={() => openLink(member.instagram)}
             >
-              <Text style={styles.buttonText}>Instagram</Text>
+              <FontAwesome name="instagram" size={28} color="#E1306C" />
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#333' }]}
+              style={styles.iconButton}
               onPress={() => openLink(member.github)}
             >
-              <Text style={styles.buttonText}>GitHub</Text>
+              <FontAwesome name="github" size={28} color="#333" />
             </TouchableOpacity>
           </View>
+          <View style={styles.separator} />
         </View>
       ))}
     </ScrollView>
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#475569',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   subtitle: {
     fontSize: 22,
@@ -90,43 +95,31 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
-  card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 14,
-    padding: 20,
+  memberContainer: {
+    marginBottom: 30,
     alignItems: 'center',
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 3,
   },
-  image: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    marginBottom: 14,
-  },
-  name: {
+  memberName: {
     fontSize: 18,
     fontWeight: '600',
     color: '#334155',
-    marginBottom: 12,
+    marginBottom: 10,
   },
-  buttonGroup: {
+  linkGroup: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 20,
+    marginBottom: 10,
   },
-  button: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+  iconButton: {
+    padding: 8,
+    borderRadius: 50,
+    backgroundColor: '#e2e8f0',
   },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 14,
-    fontWeight: '600',
+  separator: {
+    height: 1,
+    backgroundColor: '#cbd5e1',
+    width: '80%',
+    marginTop: 20,
   },
 });
 

@@ -10,11 +10,11 @@ import { useNavigation } from '@react-navigation/native';
 import { stasiunList } from '../data/Stasiun';
 import { Ionicons } from '@expo/vector-icons';
 
-const dummySchedule = stasiunList.slice(0, 4).map((stasiun, index) => ({
+const dummySchedule = stasiunList.slice(0, 8).map((stasiun, index) => ({
   id: String(index + 1),
-  train: ['Argo Bromo', 'Gajayana', 'Taksaka', 'Matarmaja'][index],
-  depart: ['08:00', '10:30', '13:15', '18:45'][index],
-  arrive: ['12:00', '15:00', '18:00', '23:30'][index],
+  train: ['Argo Bromo', 'Gajayana', 'Taksaka', 'Matarmaja', 'Kertapati','Cirebon', 'Solo balapan', 'Purwokerto'][index],
+  depart: ['08:00', '10:30', '13:15', '18:45', '09.00', '11.00', '20.00', '17.00'][index],
+  arrive: ['12:00', '15:00', '18:00', '23:30', '17.00', '18.00', '05.00', '21.45'][index],
   asal: stasiun,
   tujuan: stasiunList[(index + 2) % stasiunList.length],
 }));
@@ -99,6 +99,7 @@ const ScheduleScreen = () => {
       <FlatList
         data={filterSchedule(dummySchedule)}
         keyExtractor={(item) => item.id}
+        numColumns={2}
         renderItem={renderCard}
         ListEmptyComponent={<Text style={styles.noResult}>Tidak ditemukan.</Text>}
       />
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 22,
@@ -151,10 +153,18 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 10,
     padding: 15,
+    margin: 10,
     marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: '48%',
+    minHeight: 180,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   resultLeft: {
     flexDirection: 'row',

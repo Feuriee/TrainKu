@@ -16,26 +16,27 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const STORAGE_KEY = 'TRAIN_SCHEDULE';
+const USERS_KEY = 'USER_LIST';
+const TICKETS_SOLD_KEY = 'TICKETS_SOLD';
 
 const AdminScreen = () => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
-  const handleLogout = () => {
-    logout();
-    navigation.navigate('Login'); 
-  };
 
   const [trainName, setTrainName] = useState('');
   const [departureTime, setDepartureTime] = useState('');
   const [ticketAvailable, setTicketAvailable] = useState(true);
   const [trainSchedule, setTrainSchedule] = useState([]);
+  const [userCount, setUserCount] = useState(0);
+  const [ticketsSold, setTicketsSold] = useState(0);
 
   useEffect(() => {
     if (!user || user.role !== 'admin') {
       Alert.alert('Akses Ditolak', 'Anda tidak memiliki izin untuk mengakses halaman ini');
       navigation.navigate('Home');
     } else {
-      loadSchedule(); // Load data saat halaman dibuka
+      loadSchedule();
+      loadStats();
     }
   }, [user]);
 
@@ -47,6 +48,23 @@ const AdminScreen = () => {
       }
     } catch (e) {
       console.error('Failed to load schedule', e);
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      const userValue = await AsyncStorage.getItem(USERS_KEY);
+      const ticketValue = await AsyncStorage.getItem(TICKETS_SOLD_KEY);
+
+      if (userValue != null) {
+        const users = JSON.parse(userValue);
+        setUserCount(users.length);
+      }
+      if (ticketValue != null) {
+        setTicketsSold(parseInt(ticketValue, 10));
+      }
+    } catch (e) {
+      console.error('Failed to load statistics', e);
     }
   };
 
@@ -74,7 +92,7 @@ const AdminScreen = () => {
 
     const updatedSchedule = [...trainSchedule, newSchedule];
     setTrainSchedule(updatedSchedule);
-    saveSchedule(updatedSchedule); // Simpan ke AsyncStorage
+    saveSchedule(updatedSchedule);
     setTrainName('');
     setDepartureTime('');
   };
@@ -82,12 +100,16 @@ const AdminScreen = () => {
   const deleteSchedule = (id) => {
     const updated = trainSchedule.filter(item => item.id !== id);
     setTrainSchedule(updated);
-    saveSchedule(updated); // Simpan perubahan ke AsyncStorage
+    saveSchedule(updated);
   };
 
   const toggleTicketAvailable = () => {
     setTicketAvailable(!ticketAvailable);
-    // **Kalau mau, bisa juga disimpan ke AsyncStorage di sini**
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigation.navigate('Login');
   };
 
   return (
@@ -115,10 +137,10 @@ const AdminScreen = () => {
           <Ionicons name="log-out-outline" size={16} color="#fff" style={{ marginRight: 6 }} />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
-
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
+        {/* Tambah Jadwal */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Tambah Jadwal Kereta</Text>
           <TextInput
@@ -138,6 +160,7 @@ const AdminScreen = () => {
           </TouchableOpacity>
         </View>
 
+        {/* Daftar Jadwal */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Daftar Jadwal</Text>
           {trainSchedule.length === 0 ? (
@@ -158,6 +181,7 @@ const AdminScreen = () => {
           )}
         </View>
 
+        {/* Atur Tiket */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Atur Ketersediaan Tiket</Text>
           <Text style={styles.statusText}>
@@ -176,17 +200,20 @@ const AdminScreen = () => {
           </TouchableOpacity>
         </View>
 
+        {/* Statistik Real-time */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Statistik Pengguna</Text>
-          <Text style={styles.statsText}>Total Pengguna: 120</Text>
-          <Text style={styles.statsText}>Total Tiket Terjual: 87</Text>
+          <Text style={styles.statsText}>Total Pengguna: {userCount}</Text>
+          <Text style={styles.statsText}>Total Tiket Terjual: {ticketsSold}</Text>
         </View>
+
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  /* ... styling kamu sebelumnya tetap, tidak perlu diubah ... */
   container: {
     flex: 1,
     backgroundColor: '#e2e8f0',

@@ -24,7 +24,7 @@ const PaymentScreen = ({ navigation }) => {
     try {
       const data = await AsyncStorage.getItem('bookingData');
       console.log("Loading booking data:", data);
-      
+
       if (data) {
         setBookingData(JSON.parse(data));
       } else {
@@ -43,29 +43,29 @@ const PaymentScreen = ({ navigation }) => {
         window.alert('Harap isi data pembayaran dengan lengkap!');
         return;
       }
-      
+
 
       setIsLoading(true);
-      
+
       // Hapus data booking dari AsyncStorage dengan await
       try {
         await AsyncStorage.removeItem('bookingData');
         console.log("Data removed from AsyncStorage");
-        
+
         // PENTING: Update state setelah data dihapus
         setBookingData(null);
-        
+
         // Reset form
         setCardNumber('');
         setName('');
-        
+
         // Tampilkan konfirmasi pembayaran berhasil
         window.alert(
           'Sukses',
           'Pembayaran berhasil diproses! Data booking telah dihapus.',
           [
-            { 
-              text: 'OK', 
+            {
+              text: 'OK',
               onPress: () => {
                 // Navigasi kembali ke home screen jika perlu
                 if (navigation && navigation.navigate) {
@@ -93,10 +93,10 @@ const PaymentScreen = ({ navigation }) => {
     try {
       // Hapus data
       await AsyncStorage.removeItem('bookingData');
-      
+
       // Untuk memastikan data benar-benar dihapus
       const checkData = await AsyncStorage.getItem('bookingData');
-      
+
       if (!checkData) {
         console.log("Verified: Data successfully deleted");
         // Update state untuk refresh UI
@@ -128,14 +128,14 @@ const PaymentScreen = ({ navigation }) => {
     return (
       <View style={styles.centerContainer}>
         <Text style={styles.noDataText}>Tidak ada data booking.</Text>
-        <Button 
-          title="Kembali ke Home" 
+        <Button
+          title="Kembali ke Home"
           onPress={() => navigation && navigation.navigate('Home')}
           color="#1976D2"
         />
         <View style={styles.spacer} />
-        <Button 
-          title="Refresh Data" 
+        <Button
+          title="Refresh Data"
           onPress={loadBookingData}
           color="#4CAF50"
         />
@@ -152,6 +152,7 @@ const PaymentScreen = ({ navigation }) => {
         <Text style={styles.label}>Asal: {bookingData.asal}</Text>
         <Text style={styles.label}>Tujuan: {bookingData.tujuan}</Text>
         <Text style={styles.label}>Tanggal: {bookingData.tanggal}</Text>
+        <Text style={styles.label}>Kelas: {bookingData.kelas}</Text>
         <Text style={styles.label}>Dewasa: {bookingData.dewasa}</Text>
         <Text style={styles.label}>Bayi: {bookingData.bayi}</Text>
       </View>
@@ -174,28 +175,26 @@ const PaymentScreen = ({ navigation }) => {
       />
 
       {/* Tombol Bayar */}
-      <Button 
-        title={isLoading ? "Memproses..." : "Bayar Sekarang"} 
+      <View style={styles.spacer} />
+      <Button
+        title={isLoading ? "Memproses..." : "Bayar Sekarang"}
         onPress={handlePayment}
         disabled={isLoading}
         color="#1976D2"
+        delay="1s"
       />
-
-      {/* Tombol-tombol debug */}
-      <View style={styles.debugButtonsContainer}>
-        <Text style={styles.debugTitle}>Opsi Debug:</Text>
-        <Button 
-          title="Batalkan Payment" 
-          onPress={forceDeleteBookingData}
-          color="#FF9800"
-        />
-        <View style={styles.spacer} />
-        <Button 
-          title="Refresh Data" 
-          onPress={loadBookingData}
-          color="#4CAF50"
-        />
-      </View>
+      <View style={styles.spacer} />
+      <Button
+        title="Batalkan Payment"
+        onPress={forceDeleteBookingData}
+        color="#FF9800"
+      />
+      <View style={styles.spacer} />
+      <Button
+        title="Refresh Data"
+        onPress={loadBookingData}
+        color="#4CAF50"
+      />
     </View>
   );
 };

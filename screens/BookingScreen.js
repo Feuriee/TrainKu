@@ -69,6 +69,7 @@ const BookingScreen = () => {
       asal,
       tujuan,
       tanggal,
+      kelas,
       dewasa,
       bayi,
     };

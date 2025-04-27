@@ -11,10 +11,5 @@ export const stasiunList = [
     'Cirebon (CN)',
     'Purwokerto (PWT)',
     'Palembang (KPT)',
-    'ddd',
-    'hajdhwud',
-    'djak4wdjiuw7ahd',
-    'dwankdjwa',
-    'ddawd'
   ];
   

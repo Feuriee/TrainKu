@@ -73,10 +73,15 @@ const LoginScreen = () => {
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.note}>
-                    Admin: admin / TrainKu{'\n'}
-                    User: user / user123
-                </Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+                    <Text style={styles.note}>
+                        Belum punya akun?
+                        <TouchableOpacity>
+                            <Text onPress={() => console.log('Navigasi ke Register')} style={styles.linkText}> buat disini.</Text>
+                        </TouchableOpacity>
+                    </Text>
+                </View>
+
             </View>
         </View>
     );
@@ -133,9 +138,13 @@ const styles = StyleSheet.create({
     note: {
         marginTop: 20,
         fontSize: 12,
-        textAlign: 'center',
         color: '#777',
-    }
+    },
+    linkText: {
+        fontSize: 14,
+        color: '#3b82f6', // warna biru
+        fontWeight: 'bold',
+    },
 });
 
 export default LoginScreen;
