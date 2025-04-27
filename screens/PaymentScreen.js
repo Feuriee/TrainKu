@@ -8,9 +8,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
-import Footer from '../navigation/Footer';
 
 const PaymentScreen = ({ navigation }) => {
   const [bookingData, setBookingData] = useState(null);
