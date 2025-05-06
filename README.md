@@ -1,14 +1,12 @@
-# MASIH DALAM TAHAP PENGEMBANGAN!!!
-
 # TrainKu - Web Programming Project (A2)
 
 ## 🌟 Anggota Kelompok 3
 | No | Name | Student ID |
 |----|------|------------|
-| 1 | Ghazi Al Ghifari | - |
-| 2 | I Nyoman Dimas Kresna Adryan | - |
-| 3 | Merischa Theresia Hutauruk | - |
-| 4 | Yohanes Adi Prasetya | - |
+| 1 | Ghazi Al Ghifari | G1A023053 |
+| 2 | I Nyoman Dimas Kresna Adryan | G1A023077 |
+| 3 | Merischa Theresia Hutauruk | G1A023071 |
+| 4 | Yohanes Adi Prasetya | G1A023049 |
 
 ## 👨‍🏫 Asisten Dosen
 | No | Name | Student ID |
@@ -18,12 +16,6 @@
 
 ## 📝 Project Description
 [Project ini adalah proyek untuk memenuhi Tugas Besar Proyek Pemrograman Web ]
-
-## 🚀 Features
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- [Add more features as needed]
 
 ## 🏗️ Installation & Setup
 ```bash
@@ -74,17 +66,13 @@ TRAINKU ├── .expo
 ## 📊 Project Progress
 - [x] Task 1: Project setup and repository creation
 - [x] Task 2: Frontend mockup design
-- [ ] Task 3: Backend API development
-- [ ] Task 4: Database integration
-- [ ] Task 5: Testing and debugging
-- [ ] Task 6: Deployment
-
-## 📝 License
-[Include license information here]
+- [x] Task 3: Backend API development
+- [x] Task 4: Testing and debugging
+- [x] Task 5: Deployment
 
 ## 📞 Contact
 For any questions or suggestions, please contact the team members:
-- Ghazi Al Ghifari: [email/contact info]
-- I Nyoman Dimas Kresna Adryan: [email/contact info]
-- Merischa Theresia Hutauruk: [email/contact info]
-- Yohanes Adi Prasetya: [email/contact info]
+- Ghazi Al Ghifari
+- I Nyoman Dimas Kresna Adryan
+- Merischa Theresia Hutauruk
+- Yohanes Adi Prasetya
