@@ -16,7 +16,6 @@ import Footer from '../navigation/Footer';
 
 const screenWidth = Dimensions.get('window').width;
 
-// Popular destinations data from your specification
 const popularDestinations = [
   { name: 'Jakarta', image: require('../assets/jakarta.jpeg') },
   { name: 'Surabaya', image: require('../assets/surabaya.jpeg') },
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   
-  // Popular Destinations Section - Updated
+  // Popular Destinations Section 
   popularSection: {
     padding: 20,
     backgroundColor: '#fff',

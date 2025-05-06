@@ -213,7 +213,6 @@ const AdminScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  /* ... styling kamu sebelumnya tetap, tidak perlu diubah ... */
   container: {
     flex: 1,
     backgroundColor: '#e2e8f0',

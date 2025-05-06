@@ -24,6 +24,7 @@ const SearchScreen = () => {
     item.name.toLowerCase().includes(query.toLowerCase())
   );
 
+
   const renderCard = ({ item }) => (
     <View style={styles.resultItem}>
       <View style={styles.resultLeft}>
@@ -38,6 +39,22 @@ const SearchScreen = () => {
       </View>
     </View>
   );
+
+  const renderPopular = ({ item }) => (
+    <View style={styles.resultItem}>
+      <View style={styles.resultLeft}>
+        <Ionicons name="star-outline" size={28} color="#FFA000" style={styles.trainIcon} />
+        <View style={styles.trainInfo}>
+          <Text style={styles.trainName}>{item.name}</Text>
+          <Text style={styles.trainSubtitle}>Kereta Populer</Text>
+        </View>
+      </View>
+      <View style={styles.btnContainer}>
+        <Text style={styles.btnInfo}>Info Selengkapnya</Text>
+      </View>
+    </View>
+  );
+
 
   const navigation = useNavigation();
   return (
@@ -67,13 +84,27 @@ const SearchScreen = () => {
         onChangeText={setQuery}
       />
 
-      <Text style={styles.subTitle}>Hasil Pencarian</Text>
-      <FlatList
-        data={filtered}
-        keyExtractor={(item) => item.id}
-        renderItem={renderCard}
-        ListEmptyComponent={<Text style={styles.noResult}>Tidak ditemukan.</Text>}
-      />
+      {query === '' ? (
+        <>
+          <Text style={styles.subTitle}>Kereta Populer</Text>
+          <FlatList
+            data={popularTrains}
+            keyExtractor={(item) => item.id}
+            renderItem={renderPopular}
+          />
+        </>
+      ) : (
+        <>
+          <Text style={styles.subTitle}>Hasil Pencarian</Text>
+          <FlatList
+            data={filtered}
+            keyExtractor={(item) => item.id}
+            renderItem={renderCard}
+            ListEmptyComponent={<Text style={styles.noResult}>Tidak ditemukan.</Text>}
+          />
+        </>
+      )}
+
       </View>
     </View>
   );

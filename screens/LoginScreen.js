@@ -87,7 +87,6 @@ const LoginScreen = () => {
     );
 };
 
-// styles tetap sama
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         backgroundColor: '#f5f5f5',
-        minHeight: '100vh', // ⬅️ khusus untuk web
+        minHeight: '100vh', 
     },
     form: {
         width: '100%',
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
     },
     linkText: {
         fontSize: 14,
-        color: '#3b82f6', // warna biru
+        color: '#3b82f6',
         fontWeight: 'bold',
     },
 });

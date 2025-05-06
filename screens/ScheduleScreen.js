@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { stasiunList } from '../data/Stasiun';
 import { Ionicons } from '@expo/vector-icons';
 
+
 const dummySchedule = stasiunList.slice(0, 8).map((stasiun, index) => ({
   id: String(index + 1),
   train: ['Argo Bromo', 'Gajayana', 'Taksaka', 'Matarmaja', 'Kertapati','Cirebon', 'Solo balapan', 'Purwokerto'][index],
@@ -38,8 +39,8 @@ const ScheduleScreen = () => {
       <View style={styles.resultLeft}>
         <View style={styles.trainInfo}>
           <Text style={styles.trainName}>{item.train}</Text>
-          <Text style={styles.trainSubtitle}>Asal: {item.asal}</Text>
-          <Text style={styles.trainSubtitle}>Tujuan: {item.tujuan}</Text>
+          <Text style={styles.trainSubtitle} numberOfLines={2} ellipsizeMode="tail">Asal: {item.asal}</Text>
+          <Text style={styles.trainSubtitle} numberOfLines={2} ellipsizeMode="tail">Tujuan: {item.tujuan}</Text>
           <Text style={styles.trainSubtitle}>Keberangkatan: {item.depart}</Text>
           <Text style={styles.trainSubtitle}>Kedatangan: {item.arrive}</Text>
         </View>
@@ -155,7 +156,8 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 10,
     marginBottom: 12,
-    width: '48%',
+    marginHorizontal: '1.5%',
+    width: '47%',
     minHeight: 180,
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -172,6 +174,8 @@ const styles = StyleSheet.create({
   },
   trainInfo: {
     marginLeft: 0,
+    flex: 1,
+    flexDirection: 'column',
   },
   trainName: {
     fontSize: 16,
@@ -181,6 +185,9 @@ const styles = StyleSheet.create({
   trainSubtitle: {
     fontSize: 14,
     color: '#999',
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    width: '100%'
   },
   btnContainer: {
     backgroundColor: '#0066ff',

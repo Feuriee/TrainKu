@@ -94,7 +94,6 @@ const MainNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  // Styles tetap sama
   container: { 
     flex: 1,
     backgroundColor: '#f5f5f5'

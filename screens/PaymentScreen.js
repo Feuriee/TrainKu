@@ -52,7 +52,7 @@ const PaymentScreen = ({ navigation }) => {
         await AsyncStorage.removeItem('bookingData');
         console.log("Data removed from AsyncStorage");
 
-        // PENTING: Update state setelah data dihapus
+        // Update state setelah data dihapus
         setBookingData(null);
 
         // Reset form

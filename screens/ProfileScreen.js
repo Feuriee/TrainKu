@@ -13,7 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext'; 
-import Footer from '../navigation/Footer'; // (Kalau mau lebih rapi, sebaiknya pindah ke ../components/Footer)
+import Footer from '../navigation/Footer';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();

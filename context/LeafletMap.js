@@ -3,7 +3,6 @@ import { Platform, View } from 'react-native';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Anda masih bisa menggunakan shadow default Leaflet jika mau
 import shadow from 'leaflet/dist/images/marker-shadow.png';
 
 const LeafletMap = ({ latitude = -3.809885, longitude = 102.265541 }) => {
@@ -31,11 +30,11 @@ const LeafletMap = ({ latitude = -3.809885, longitude = 102.265541 }) => {
       // --- Bagian untuk menggunakan ikon kustom ---
       const customIcon = L.icon({
         iconUrl: '/marker.png',
-        iconRetinaUrl: '/marker.png', // Jika Anda punya versi retina
+        iconRetinaUrl: '/marker.png', 
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
-        shadowUrl: shadow, // Gunakan shadow default Leaflet
+        shadowUrl: shadow, 
         shadowSize: [41, 41],
         shadowAnchor: [12, 41]
       });
@@ -44,9 +43,7 @@ const LeafletMap = ({ latitude = -3.809885, longitude = 102.265541 }) => {
         .addTo(map)
         .bindPopup('Kantor Customer Service')
         .openPopup();
-      // --- Akhir bagian ikon kustom ---
-
-      // Cleanup saat komponen unmount
+      
       return () => {
         map.remove();
       };

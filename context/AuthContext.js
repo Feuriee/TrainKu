@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // null berarti belum login
   
   const login = (email, password) => {
-    // Logic autentikasi sederhana
+    // Logic autentikasi
     if (email === 'admin' && password === 'TrainKu') {
       setUser({ email, role: 'admin', name: 'Admin TrainKu' });
       return { success: true, role: 'admin' };
